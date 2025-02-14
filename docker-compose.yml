@@ -5,6 +5,8 @@ services:
     image: asthmatracker:latest
     build:
       context: .
+      args:
+        GITHUB_TOKEN: ${GITHUB_TOKEN}
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
