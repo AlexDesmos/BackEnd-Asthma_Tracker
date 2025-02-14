@@ -6,4 +6,4 @@ COPY target/asthmatracker-0.0.1-SNAPSHOT.jar /app/asthmatracker.jar
 
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-jar", "spring-api.jar"]
+ENTRYPOINT ["java", "-jar", "asthmatracker.jar"]
