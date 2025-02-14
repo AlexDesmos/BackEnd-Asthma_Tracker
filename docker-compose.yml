@@ -22,7 +22,7 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_DB: jdbc:postgresql://91.218.228.129:5432/asthmatracker
+      POSTGRES_DB: asthmatracker
       POSTGRES_USER: asthmauser
       POSTGRES_PASSWORD: asthmapassword
     volumes:
