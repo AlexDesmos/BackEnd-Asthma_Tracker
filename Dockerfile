@@ -2,7 +2,7 @@ FROM openjdk:21-jdk-slim
 
 WORKDIR /app
 
-COPY target/spring-api.jar /app/spring-api.jar
+COPY target/asthmatracker-0.0.1-SNAPSHOT.jar /app/asthmatracker.jar
 
 EXPOSE 8080
 
