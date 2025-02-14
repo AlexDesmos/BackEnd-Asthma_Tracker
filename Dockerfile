@@ -4,7 +4,7 @@ RUN apt-get update && apt-get install -y git
 
 WORKDIR /app
 
-RUN git clone https://$GITHUB_TOKEN@github.com/AlexDesmos/Project-zomboid.git . || (git pull https://$GITHUB_TOKEN@github.com/AlexDesmos/Project-zomboid.git)
+RUN git clone https://$GITHUB_TOKEN:x-oauth-basic@github.com/AlexDesmos/Project-zomboid.git . || (git pull https://$GITHUB_TOKEN:x-oauth-basic@github.com/AlexDesmos/Project-zomboid.git)
 
 # Соберите проект с помощью Maven
 RUN mvn clean package
