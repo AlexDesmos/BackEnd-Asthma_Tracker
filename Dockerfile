@@ -1,11 +1,17 @@
-FROM openjdk:21-jdk-slim
-
+FROM maven:3.9.6-eclipse-temurin-21 AS build
 WORKDIR /app
 
-RUN mvn clean package
+COPY . .
+RUN mvn clean package -DskipTests
 
-COPY target/asthmatracker-0.0.1-SNAPSHOT.jar /app/asthmatracker.jar
+FROM openjdk:21-jdk-slim
+WORKDIR /app
 
+COPY --from=build /app/target/asthmatracker-0.0.1-SNAPSHOT.jar asthmatracker.jar
+
+# Открываем порт
 EXPOSE 8080
 
+# Запускаем приложение
 ENTRYPOINT ["java", "-jar", "asthmatracker.jar"]
+
