@@ -1,12 +1,13 @@
 FROM openjdk:21-jdk-slim
 
-RUN apt-get update && apt-get install -y git
+RUN apt-get update && apt-get install -y git maven
 
 WORKDIR /app
 
-RUN git clone https://mkudmi:$GITHUB_TOKEN@github.com/AlexDesmos/Project-zomboid.git . || (git pull https://mkudmi:$GITHUB_TOKEN@github.com/AlexDesmos/Project-zomboid.git)
+ARG GITHUB_TOKEN
+RUN git clone https://mkudmi:$GITHUB_TOKEN@github.com/AlexDesmos/Project-zomboid.git /app || \
+    (cd /app && git pull)
 
-# Соберите проект с помощью Maven
 RUN mvn clean package
 
 COPY target/asthmatracker-0.0.1-SNAPSHOT.jar /app/asthmatracker.jar
