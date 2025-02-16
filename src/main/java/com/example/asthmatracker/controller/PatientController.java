@@ -2,10 +2,9 @@ package com.example.asthmatracker.controller;
 
 import com.example.asthmatracker.models.Patient;
 import com.example.asthmatracker.service.PatientService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/patients")
@@ -20,5 +19,12 @@ public class PatientController {
     @PostMapping
     public Patient createPatient(@RequestBody Patient patient) {
         return patientService.createPatient(patient);
+    }
+
+    @GetMapping
+    public List<Patient> getPatientsByFilter(
+            @RequestParam(required = false) String full_name,
+            @RequestParam(required = false) String oms) {
+        return patientService.getPatientsByFilter(full_name, oms);
     }
 }

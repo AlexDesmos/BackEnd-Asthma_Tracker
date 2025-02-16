@@ -1,9 +1,13 @@
 package com.example.asthmatracker.service;
 
 import com.example.asthmatracker.models.Patient;
+import org.jooq.Condition;
 import org.jooq.DSLContext;
 import org.jooq.Record;
+import org.jooq.impl.DSL;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 import static com.example.jooq.generated.Tables.PATIENTS;
 
@@ -35,4 +39,25 @@ public class PatientService {
         return patient;
     }
 
+    public List<Patient> getPatientsByFilter(String fullName, String oms) {
+        Condition condition = DSL.noCondition();
+        if (fullName != null && !fullName.isBlank()) {
+            String likePattern = "%" + fullName.toLowerCase() + "%";
+            condition = condition.and(
+                    DSL.lower(PATIENTS.NAME).like(likePattern)
+                            .or(DSL.lower(PATIENTS.SURNAME).like(likePattern))
+                            .or(DSL.lower(PATIENTS.PATRONYMIC).like(likePattern))
+            );
+        }
+
+        if (oms != null && !oms.isBlank()) {
+            condition = condition.and(
+                    PATIENTS.OMS.like("%" + oms + "%")
+            );
+        }
+
+        return dsl.selectFrom(PATIENTS)
+                .where(condition)
+                .fetchInto(Patient.class);
+    }
 }
