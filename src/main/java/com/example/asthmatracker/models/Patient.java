@@ -8,6 +8,7 @@ import java.time.LocalDate;
 @Data
 @Builder
 public class Patient {
+    private Integer id;
     private String name;
     private String surname;
     private String patronymic;
@@ -15,5 +16,4 @@ public class Patient {
     private String email;
     private String phone_number;
     private String oms;
-    private Integer id;
 }
