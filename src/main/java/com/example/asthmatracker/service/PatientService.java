@@ -75,7 +75,7 @@ public class PatientService {
                 .fetchOne();
 
         if (record == null) {
-            throw new RuntimeException("Patient with ID " + id + " not found");
+            throw new PatientNotFoundException("Пациента с id " + id + " не существует");
         }
 
         return record.into(Patient.class);
