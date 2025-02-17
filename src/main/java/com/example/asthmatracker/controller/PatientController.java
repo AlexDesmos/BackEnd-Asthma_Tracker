@@ -36,4 +36,10 @@ public class PatientController {
         return patientService.updatePatient(patient, id);
     }
 
+    @DeleteMapping
+    public void deletePatientByOms(@RequestParam String oms) {
+        patientService.deletePatientByOms(oms);
+    }
+
+
 }

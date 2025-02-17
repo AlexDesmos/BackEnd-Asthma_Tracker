@@ -1,5 +1,6 @@
 package com.example.asthmatracker.service;
 
+import com.example.asthmatracker.exceptions.PatientNotFoundException;
 import com.example.asthmatracker.models.Patient;
 import org.jooq.Condition;
 import org.jooq.DSLContext;
@@ -78,6 +79,16 @@ public class PatientService {
         }
 
         return record.into(Patient.class);
+    }
+
+    public void deletePatientByOms(String oms) {
+        int rowsDeleted = dsl.deleteFrom(PATIENTS)
+                .where(PATIENTS.OMS.eq(oms))
+                .execute();
+
+        if (rowsDeleted == 0) {
+            throw new PatientNotFoundException("Пациента с таким ОМС не существует");
+        }
     }
 
 }
