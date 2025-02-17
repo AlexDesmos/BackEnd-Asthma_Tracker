@@ -2,6 +2,7 @@ package com.example.asthmatracker.controller;
 
 import com.example.asthmatracker.models.Patient;
 import com.example.asthmatracker.service.PatientService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public class PatientController {
     }
 
     @PostMapping
-    public Patient createPatient(@RequestBody Patient patient) {
+    public Patient createPatient(@Valid @RequestBody Patient patient) {
         return patientService.createPatient(patient);
     }
 
@@ -27,4 +28,12 @@ public class PatientController {
             @RequestParam(required = false) String oms) {
         return patientService.getPatientsByFilter(full_name, oms);
     }
+
+    @PutMapping("/{id}")
+    public Patient updatePatient(
+            @Valid @RequestBody Patient patient,
+            @PathVariable Integer id) {
+        return patientService.updatePatient(patient, id);
+    }
+
 }

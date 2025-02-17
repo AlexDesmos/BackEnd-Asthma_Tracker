@@ -60,4 +60,24 @@ public class PatientService {
                 .where(condition)
                 .fetchInto(Patient.class);
     }
+
+    public Patient updatePatient(Patient patient, Integer id) {
+        Record record = dsl.update(PATIENTS)
+                .set(PATIENTS.NAME, patient.getName())
+                .set(PATIENTS.SURNAME, patient.getSurname())
+                .set(PATIENTS.PATRONYMIC, patient.getPatronymic())
+                .set(PATIENTS.BIRTHDAY, patient.getBirthday())
+                .set(PATIENTS.EMAIL, patient.getEmail())
+                .set(PATIENTS.PHONE_NUMBER, patient.getPhone_number())
+                .where(PATIENTS.ID.eq(id))
+                .returning()
+                .fetchOne();
+
+        if (record == null) {
+            throw new RuntimeException("Patient with ID " + id + " not found");
+        }
+
+        return record.into(Patient.class);
+    }
+
 }
