@@ -40,6 +40,4 @@ public class PatientController {
     public void deletePatientByOms(@RequestParam String oms) {
         patientService.deletePatientByOms(oms);
     }
-
-
 }
