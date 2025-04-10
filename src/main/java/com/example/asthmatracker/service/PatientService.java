@@ -2,6 +2,7 @@ package com.example.asthmatracker.service;
 
 import com.example.asthmatracker.exceptions.PatientNotFoundException;
 import com.example.asthmatracker.models.Patient;
+import com.example.asthmatracker.models.PatientRegistration;
 import org.jooq.Condition;
 import org.jooq.DSLContext;
 import org.jooq.Record;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 import static com.example.jooq.generated.Tables.PATIENTS;
+import static com.example.jooq.generated.Tables.PATIENT_LOGIN;
 
 @Service
 public class PatientService {
@@ -89,6 +91,29 @@ public class PatientService {
         if (rowsDeleted == 0) {
             throw new PatientNotFoundException("Пациента с таким ОМС не существует");
         }
+    }
+
+    public PatientRegistration createPatientPassword(PatientRegistration patientRegistration) {
+        Record record = dsl.insertInto(PATIENT_LOGIN)
+                .set(PATIENT_LOGIN.OMS, patientRegistration.getOms())
+                .set(PATIENT_LOGIN.PASSWORD, patientRegistration.getPassword())
+                .returning(PATIENT_LOGIN.ID)
+                .fetchOne();
+
+        if (record != null) {
+            patientRegistration.setId(record.get(PATIENTS.ID));
+        }
+
+        return patientRegistration;
+    }
+
+    public boolean isLoginValid(String oms, String password) {
+        Record record = dsl.selectFrom(PATIENT_LOGIN)
+                .where(PATIENT_LOGIN.OMS.eq(oms))
+                .and(PATIENT_LOGIN.PASSWORD.eq(password))
+                .fetchOne();
+
+        return record != null;
     }
 
 }

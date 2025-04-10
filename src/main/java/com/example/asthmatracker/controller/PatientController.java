@@ -1,6 +1,7 @@
 package com.example.asthmatracker.controller;
 
 import com.example.asthmatracker.models.Patient;
+import com.example.asthmatracker.models.PatientRegistration;
 import com.example.asthmatracker.service.PatientService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
@@ -39,5 +40,15 @@ public class PatientController {
     @DeleteMapping
     public void deletePatientByOms(@RequestParam String oms) {
         patientService.deletePatientByOms(oms);
+    }
+
+    @PostMapping("/register")
+    public PatientRegistration createPatientPassword(@RequestBody PatientRegistration patientRegistration) {
+        return patientService.createPatientPassword(patientRegistration);
+    }
+
+    @GetMapping("/validate")
+    public boolean validateLogin(@RequestParam String oms, @RequestParam String password) {
+        return patientService.isLoginValid(oms, password);
     }
 }
