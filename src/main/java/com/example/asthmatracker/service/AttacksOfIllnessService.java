@@ -34,9 +34,10 @@ public class AttacksOfIllnessService {
         return attacksOfIllness;
     }
 
-    public List<AttacksOfIllness> getAttacksByFilter(LocalDate startDate, LocalDate endDate) {
+    public List<AttacksOfIllness> getAttacksByFilter(Integer patientId, LocalDate startDate, LocalDate endDate) {
         return dsl.selectFrom(ATTACKS_OF_ILLNESS)
-                .where(ATTACKS_OF_ILLNESS.DATE_TIME.between(
+                .where(ATTACKS_OF_ILLNESS.PATIENT_ID.eq(patientId))
+                .and(ATTACKS_OF_ILLNESS.DATE_TIME.between(
                         startDate.atStartOfDay(),
                         endDate.plusDays(1).atStartOfDay().minusSeconds(1)
                 ))

@@ -24,9 +24,10 @@ public class AttacksOfIllnessController {
 
     @GetMapping
     public List<AttacksOfIllness> getAttacksByDates(
+            @RequestParam() Integer patient_id,
             @RequestParam(required = false) LocalDate start_date,
             @RequestParam(required = false) LocalDate end_date
     ) {
-        return attacksOfIllnessService.getAttacksByFilter(start_date, end_date);
+        return attacksOfIllnessService.getAttacksByFilter(patient_id, start_date, end_date);
     }
 }
