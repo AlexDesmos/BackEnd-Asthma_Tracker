@@ -15,8 +15,12 @@ public class WebConfig {
             @Override
             public void addCorsMappings(@NonNull CorsRegistry registry) {
                 registry.addMapping("/api/**")
-                        .allowedOrigins("http://localhost:3000") // Разрешаем фронтенду доступ
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Разрешенные HTTP методы
+                        .allowedOrigins(
+                                "http://localhost:3000",
+                                "https://астматрекер.рф",
+                                "https://xn--80aapayj3adckc.xn--p1ai"
+                        )
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowCredentials(true);
             }
         };
