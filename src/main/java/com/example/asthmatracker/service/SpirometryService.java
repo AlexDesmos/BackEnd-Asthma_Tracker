@@ -5,6 +5,9 @@ import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import static com.example.jooq.generated.Tables.SPIROMETRY;
 
 @Service
@@ -29,5 +32,15 @@ public class SpirometryService {
         }
 
         return spirometry;
+    }
+
+    public List<Spirometry> getSpirometryByFilter(Integer patientId, LocalDate startDate, LocalDate endDate) {
+        return dsl.selectFrom(SPIROMETRY)
+                .where(SPIROMETRY.PATIENT_ID.eq(patientId))
+                .and(SPIROMETRY.DATE_TIME.between(
+                        startDate.atStartOfDay(),
+                        endDate.plusDays(1).atStartOfDay().minusSeconds(1)
+                ))
+                .fetchInto(Spirometry.class);
     }
 }
