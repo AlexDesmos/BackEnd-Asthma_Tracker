@@ -3,7 +3,6 @@ package com.example.asthmatracker.models;
 import lombok.Builder;
 import lombok.Data;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
