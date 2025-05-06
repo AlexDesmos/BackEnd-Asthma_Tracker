@@ -21,13 +21,13 @@ public class MedicineController {
         return medicineService.createMedicine(medicine);
     }
 
-    @GetMapping("/by_name")
+    @GetMapping("/by-name")
     public List<Medicine> getAllMedicine(
             @RequestParam(required = false) String name) {
         return medicineService.getMedicineByName(name);
     }
 
-    @GetMapping("/by_patient")
+    @GetMapping("/by-patient")
     public List<Medicine> getMedicineByPatient(
             @RequestParam Integer patient_id) {
         return medicineService.getMedicineByPatient(patient_id);
