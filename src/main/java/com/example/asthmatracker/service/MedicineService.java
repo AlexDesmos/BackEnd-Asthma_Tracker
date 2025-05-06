@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 import static com.example.jooq.generated.Tables.MEDICINE;
+import static com.example.jooq.generated.Tables.MEDICINE_TO_PATIENT;
 
 @Service
 public class MedicineService {
@@ -21,7 +22,7 @@ public class MedicineService {
     public Medicine createMedicine(Medicine medicine) {
         Record record = dsl.insertInto(MEDICINE)
                 .set(MEDICINE.NAME, medicine.getName())
-                .set(MEDICINE.MG, medicine.getMg())
+                .set(MEDICINE.MKG, medicine.getMkg())
                 .returning(MEDICINE.ID)
                 .fetchOne();
 
@@ -35,6 +36,13 @@ public class MedicineService {
     public List<Medicine> getMedicineByName(String name) {
         return dsl.selectFrom(MEDICINE)
                 .where(MEDICINE.NAME.eq(name))
+                .fetchInto(Medicine.class);
+    }
+
+    public List<Medicine> getMedicineByPatient(Integer patientId) {
+        return dsl.select(MEDICINE.ID, MEDICINE.NAME, MEDICINE.MKG).from(MEDICINE_TO_PATIENT)
+                .join(MEDICINE).on(MEDICINE_TO_PATIENT.MEDICINE_ID.eq(MEDICINE.ID))
+                .where(MEDICINE_TO_PATIENT.PATIENT_ID.eq(patientId))
                 .fetchInto(Medicine.class);
     }
 }

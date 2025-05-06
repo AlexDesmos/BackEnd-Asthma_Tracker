@@ -10,5 +10,5 @@ import java.math.BigDecimal;
 public class Medicine {
     private Integer id;
     private String name;
-    private BigDecimal mg;
+    private BigDecimal mkg;
 }
