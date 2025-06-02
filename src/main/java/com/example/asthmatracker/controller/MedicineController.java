@@ -1,6 +1,7 @@
 package com.example.asthmatracker.controller;
 
 import com.example.asthmatracker.models.Medicine;
+import com.example.asthmatracker.models.TakingMedication;
 import com.example.asthmatracker.service.MedicineService;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +17,7 @@ public class MedicineController {
         this.medicineService = medicineService;
     }
 
-    @PostMapping
+    @PostMapping("create-medicine")
     public Medicine createMedicine(@RequestBody Medicine medicine) {
         return medicineService.createMedicine(medicine);
     }
@@ -31,5 +32,10 @@ public class MedicineController {
     public List<Medicine> getMedicineByPatient(
             @RequestParam Integer patient_id) {
         return medicineService.getMedicineByPatient(patient_id);
+    }
+
+    @PostMapping("taking-medication")
+    public TakingMedication postTakingMedication(@RequestBody TakingMedication takingMedication) {
+        return medicineService.postTakingMedication(takingMedication);
     }
 }
