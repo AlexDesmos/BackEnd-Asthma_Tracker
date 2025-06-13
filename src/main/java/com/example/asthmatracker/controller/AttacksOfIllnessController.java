@@ -17,11 +17,17 @@ public class AttacksOfIllnessController {
         this.attacksOfIllnessService = attacksOfIllnessService;
     }
 
+    /**
+     * Записать приступ
+     * */
     @PostMapping
     public AttacksOfIllness postAttack(@RequestBody AttacksOfIllness attacksOfIllness) {
         return attacksOfIllnessService.postAttack(attacksOfIllness);
     }
 
+    /**
+     * Получить список приступов по дате
+     * */
     @GetMapping
     public List<AttacksOfIllness> getAttacksByDates(
             @RequestParam() Integer patient_id,

@@ -18,11 +18,17 @@ public class PatientController {
         this.patientService = patientService;
     }
 
+    /**
+     * Создать пациента
+     * */
     @PostMapping
     public Patient createPatient(@Valid @RequestBody Patient patient) {
         return patientService.createPatient(patient);
     }
 
+    /**
+     * Получить список пациентов по фильтру
+     * */
     @GetMapping
     public List<Patient> getPatientsByFilter(
             @RequestParam(required = false) String full_name,
@@ -30,6 +36,9 @@ public class PatientController {
         return patientService.getPatientsByFilter(full_name, oms);
     }
 
+    /**
+     * Изменить данные пациента
+     * */
     @PutMapping("/{id}")
     public Patient updatePatient(
             @Valid @RequestBody Patient patient,
@@ -37,16 +46,25 @@ public class PatientController {
         return patientService.updatePatient(patient, id);
     }
 
+    /**
+     * Удалить пациента
+     * */
     @DeleteMapping
     public void deletePatientByOms(@RequestParam String oms) {
         patientService.deletePatientByOms(oms);
     }
 
+    /**
+     * Присвоить пользователю пароль
+     * */
     @PostMapping("/register")
     public PatientRegistration createPatientPassword(@RequestBody PatientRegistration patientRegistration) {
         return patientService.createPatientPassword(patientRegistration);
     }
 
+    /**
+     * Проверить, что пароль пользователя корректный
+     * */
     @GetMapping("/validate")
     public boolean validateLogin(@RequestParam String oms, @RequestParam String password) {
         return patientService.isLoginValid(oms, password);

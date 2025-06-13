@@ -17,11 +17,17 @@ public class SpirometryController {
         this.spirometryService = spirometryService;
     }
 
+    /**
+     * Записать результат спирометрии
+     * */
     @PostMapping
     public Spirometry postSpirometry(@RequestBody Spirometry spirometry) {
         return spirometryService.postResultOfSpirometry(spirometry);
     }
 
+    /**
+     * Получить список результатов спирометрии
+     * */
     @GetMapping
     public List<Spirometry> getSpirometryByFilter(
             @RequestParam() Integer patient_id,
