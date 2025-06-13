@@ -1,6 +1,5 @@
 package com.example.asthmatracker.service;
 
-import com.example.asthmatracker.exceptions.PatientNotFoundException;
 import com.example.asthmatracker.models.Patient;
 import com.example.asthmatracker.models.PatientRegistration;
 import org.jooq.Condition;
@@ -76,10 +75,6 @@ public class PatientService {
                 .returning()
                 .fetchOne();
 
-        if (record == null) {
-            throw new PatientNotFoundException("Пациента с id " + id + " не существует");
-        }
-
         return record.into(Patient.class);
     }
 
@@ -87,10 +82,6 @@ public class PatientService {
         int rowsDeleted = dsl.deleteFrom(PATIENTS)
                 .where(PATIENTS.OMS.eq(oms))
                 .execute();
-
-        if (rowsDeleted == 0) {
-            throw new PatientNotFoundException("Пациента с таким ОМС не существует");
-        }
     }
 
     public PatientRegistration createPatientPassword(PatientRegistration patientRegistration) {
