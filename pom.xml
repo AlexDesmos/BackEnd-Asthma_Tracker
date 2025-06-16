@@ -22,6 +22,7 @@
         <jooq.version>3.19.8</jooq.version>
         <postgresql.version>42.7.3</postgresql.version>
         <lombok.version>1.18.30</lombok.version>
+        <spring.security.version>6.4.4</spring.security.version>
     </properties>
 
     <dependencies>
@@ -73,7 +74,17 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!-- Шифрование данных -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-crypto</artifactId>
+            <version>${spring.security.version}</version>
+        </dependency>
+
     </dependencies>
+
+
 
     <build>
         <plugins>

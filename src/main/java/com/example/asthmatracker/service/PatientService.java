@@ -6,6 +6,7 @@ import org.jooq.Condition;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.impl.DSL;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +16,8 @@ import static com.example.jooq.generated.Tables.PATIENT_LOGIN;
 
 @Service
 public class PatientService {
+
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     private final DSLContext dsl;
 
@@ -85,9 +88,11 @@ public class PatientService {
     }
 
     public PatientRegistration createPatientPassword(PatientRegistration patientRegistration) {
+        String hashedPassword = passwordEncoder.encode(patientRegistration.getPassword());
+
         Record record = dsl.insertInto(PATIENT_LOGIN)
                 .set(PATIENT_LOGIN.OMS, patientRegistration.getOms())
-                .set(PATIENT_LOGIN.PASSWORD, patientRegistration.getPassword())
+                .set(PATIENT_LOGIN.PASSWORD, hashedPassword)
                 .returning(PATIENT_LOGIN.ID)
                 .fetchOne();
 
@@ -95,16 +100,19 @@ public class PatientService {
             patientRegistration.setId(record.get(PATIENTS.ID));
         }
 
-        return patientRegistration;
+        return null;
     }
 
     public boolean isLoginValid(String oms, String password) {
         Record record = dsl.selectFrom(PATIENT_LOGIN)
                 .where(PATIENT_LOGIN.OMS.eq(oms))
-                .and(PATIENT_LOGIN.PASSWORD.eq(password))
                 .fetchOne();
 
-        return record != null;
-    }
+        if (record == null) {
+            return false;
+        }
 
+        String hashedPassword = record.get(PATIENT_LOGIN.PASSWORD);
+        return passwordEncoder.matches(password, hashedPassword);
+    }
 }
