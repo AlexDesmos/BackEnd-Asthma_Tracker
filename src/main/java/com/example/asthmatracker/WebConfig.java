@@ -18,7 +18,8 @@ public class WebConfig {
                         .allowedOrigins(
                                 "http://localhost:3000",
                                 "https://астматрекер.рф",
-                                "https://xn--80aapayj3adckc.xn--p1ai"
+                                "https://xn--80aapayj3adckc.xn--p1ai",
+                                "https://editor.swagger.io"
                         )
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowCredentials(true);
