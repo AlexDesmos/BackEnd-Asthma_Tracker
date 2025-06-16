@@ -20,7 +20,7 @@ public class MedicineController {
     /**
      * Создать запись с лекарством
      * */
-    @PostMapping("create-medicine")
+    @PostMapping("/create-medicine")
     public Medicine createMedicine(@RequestBody Medicine medicine) {
         return medicineService.createMedicine(medicine);
     }
