@@ -34,6 +34,7 @@ public class PatientService {
                 .set(PATIENTS.EMAIL, patient.getEmail())
                 .set(PATIENTS.PHONE_NUMBER, patient.getPhone_number())
                 .set(PATIENTS.OMS, patient.getOms())
+                .set(PATIENTS.SEX, patient.getSex())
                 .returning(PATIENTS.ID)
                 .fetchOne();
 
@@ -72,6 +73,7 @@ public class PatientService {
                 .set(PATIENTS.SURNAME, patient.getSurname())
                 .set(PATIENTS.PATRONYMIC, patient.getPatronymic())
                 .set(PATIENTS.BIRTHDAY, patient.getBirthday())
+                .set(PATIENTS.SEX, patient.getSex())
                 .set(PATIENTS.EMAIL, patient.getEmail())
                 .set(PATIENTS.PHONE_NUMBER, patient.getPhone_number())
                 .where(PATIENTS.ID.eq(id))

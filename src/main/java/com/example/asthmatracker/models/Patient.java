@@ -29,4 +29,5 @@ public class Patient {
             message = "ОМС должен содержать ровно 16 цифр."
     )
     private String oms;
+    private String sex;
 }
